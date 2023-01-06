@@ -83,7 +83,7 @@ LINK_GITHUB = 'https://github.com/Miriel-py/Navi'
 LINK_PRIVACY_POLICY = 'https://github.com/Miriel-py/Navi/blob/master/PRIVACY.md'
 
 # --- Default messages ---
-DEFAULT_MESSAGE = '{name} Hey! It\'s time for {command}!'
+DEFAULT_MESSAGE = '{name} {command}'
 DEFAULT_MESSAGE_EVENT = (
     '{name} Hey! The **{event}** event just finished! You can check the results in <#604410216385085485> on the '
     f'official EPIC RPG server.'
@@ -105,7 +105,7 @@ DEFAULT_MESSAGES = {
     'guild': DEFAULT_MESSAGE,
     'horse': DEFAULT_MESSAGE,
     'horse-race': DEFAULT_MESSAGE_EVENT,
-    'hunt': '{name} Hey! It\'s time for {command}! {drop_emoji}',
+    'hunt': '{name} {command} {drop_emoji}',
     'lootbox': DEFAULT_MESSAGE,
     'lottery': '{name} Hey! The lottery just finished. Use </lottery:957815874063061072> to check out who won and {command} to enter the next draw!',
     'minintboss': DEFAULT_MESSAGE_EVENT,

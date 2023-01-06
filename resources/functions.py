@@ -938,7 +938,7 @@ async def call_ready_command(bot: commands.Bot, message: discord.Message, user: 
     if command is not None: await command.callback(command.cog, message, user=user)
 
 
-async def get_slash_command(user_settings: users.User, command_name: str, include_prefix: Optional[bool] = True) -> None:
+async def get_slash_command(user_settings: users.User, command_name: str, include_prefix: Optional[bool] = False) -> None:
     """Gets a slash command string or mention depending on user setting"""
     if user_settings.slash_mentions_enabled:
         return strings.SLASH_COMMANDS.get(command_name, None)
