@@ -927,7 +927,8 @@ async def embed_settings_reminders(bot: discord.Bot, ctx: discord.ApplicationCon
         f'{emojis.BP} **Pet tournament**: {await functions.bool_to_text(user_settings.alert_pet_tournament.enabled)}\n'
     )
     multipliers = (
-        f'_Multipliers can be used to add custom reminder reductions (e.g. for area 18)._\n'
+        f'_These are for **personal** differences (e.g. area 18, returning event)._\n'
+        f'_These are **not** for global event reductions. Ask your Navi admin to set those._\n'
         f'{emojis.BP} **Adventure**: `{user_settings.alert_adventure.multiplier}`\n'
         f'{emojis.BP} **Chimney** {emojis.XMAS_SOCKS}: `{user_settings.alert_chimney.multiplier}`\n'
         f'{emojis.BP} **Daily**: `{user_settings.alert_daily.multiplier}`\n'
@@ -1014,8 +1015,8 @@ async def embed_settings_user(bot: discord.Bot, ctx: discord.ApplicationContext,
         f'{emojis.DETAIL} _Rotates hunt reminders between `hunt` and `hunt together`._\n'
         f'{emojis.BP} **Slash commands in reminders**: {await functions.bool_to_text(user_settings.slash_mentions_enabled)}\n'
         f'{emojis.DETAIL} _If you can\'t see slash mentions properly, update your Discord app._\n'
-        f'{emojis.BP} **Christmas area mode** {emojis.XMAS_SOCKS}: {await functions.bool_to_text(user_settings.christmas_area_enabled)}\n'
-        f'{emojis.DETAIL} _Reduces your reminders by 10%._\n'
+        #f'{emojis.BP} **Christmas area mode** {emojis.XMAS_SOCKS}: {await functions.bool_to_text(user_settings.christmas_area_enabled)}\n'
+        #f'{emojis.DETAIL} _Reduces your reminders by 10%._\n'
     )
     tracking = (
         f'{emojis.BP} **Command tracking**: {await functions.bool_to_text(user_settings.tracking_enabled)}\n'
