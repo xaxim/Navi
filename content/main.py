@@ -124,6 +124,9 @@ async def embed_about(bot: commands.Bot, api_latency: datetime) -> discord.Embed
     user_count = await users.get_user_count()
     all_settings = await settings_db.get_settings()
     uptime = datetime.utcnow().replace(microsecond=0) - datetime.fromisoformat(all_settings['startup_time'])
+    version_file = open(settings.VERSION_FILE, 'r')
+    version = version_file.readline().rstrip('\n')
+    version_file.close()
     general = (
         f'{emojis.BP} {len(bot.guilds):,} servers\n'
         f'{emojis.BP} {user_count:,} users\n'
@@ -133,6 +136,7 @@ async def embed_about(bot: commands.Bot, api_latency: datetime) -> discord.Embed
     )
     creator = f'{emojis.BP} Miriel#0001'
     dev_stuff = (
+        f'{emojis.BP} Version: {version}\n'
         f'{emojis.BP} Language: Python {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}\n'
         f'{emojis.BP} Library: Pycord {discord.__version__}\n'
         f'{emojis.BP} System CPU usage: {psutil.cpu_percent()}%\n'

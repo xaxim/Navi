@@ -82,7 +82,7 @@ NAVI_DB = sqlite3.connect(DB_FILE, isolation_level=None, detect_types=sqlite3.PA
 NAVI_DB.row_factory = sqlite3.Row
 LOG_FILE = os.path.join(BOT_DIR, 'logs/discord.log')
 IMG_NAVI = os.path.join(BOT_DIR, 'images/navi.png')
-
+VERSION_FILE = os.path.join(BOT_DIR, 'version')
 
 DONOR_COOLDOWNS = (1, 0.9, 0.8, 0.65)
 
