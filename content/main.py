@@ -141,6 +141,8 @@ async def embed_about(bot: commands.Bot, api_latency: datetime) -> discord.Embed
         f'{emojis.BP} Library: Pycord {discord.__version__}\n'
         f'{emojis.BP} System CPU usage: {psutil.cpu_percent()}%\n'
         f'{emojis.BP} System RAM usage: {psutil.virtual_memory()[2]}%\n'
+        f'{emojis.BP} Hosted by: carlosxaxim#9000\n'
+        f'{emojis.BP} This fork: [github/xaxim/navi](https://github.com/xaxim/navi)\n'
     )
     thanks_to = [
         'Swiss cheese',
