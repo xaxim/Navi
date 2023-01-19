@@ -1,7 +1,0 @@
-#!/bin/bash
-
-SCRIPT_RELATIVE_DIR=$(dirname "${BASH_SOURCE[0]}") 
-VERSION_FILE_DIR=$SCRIPT_RELATIVE_DIR/.. 
-
-git rev-parse --short origin/master | cat > $VERSION_FILE_DIR/version
- 
