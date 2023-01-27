@@ -988,7 +988,6 @@ class ManagePortalsSelect(discord.ui.Select):
             portal = await portals.get_portal(self.view.user_settings.user_id, channel_id)
             await portal.delete()
             self.view.user_portals.remove(portal)
-
         for child in self.view.children.copy():
             if isinstance(child, ManagePortalsSelect):
                 self.view.remove_item(child)

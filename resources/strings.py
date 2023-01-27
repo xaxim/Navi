@@ -86,6 +86,7 @@ LINK_PRIVACY_POLICY = 'https://github.com/Miriel-py/Navi/blob/master/PRIVACY.md'
 
 # --- Default messages ---
 DEFAULT_MESSAGE = '{name} {command}'
+DEFAULT_MESSAGE_BOOST = '{name} Hey! Your {boost} just ran out!'
 DEFAULT_MESSAGE_EVENT = (
     '{name} Hey! The **{event}** event just finished! You can check the results in <#604410216385085485> on the '
     f'official EPIC RPG server.'
@@ -112,7 +113,7 @@ DEFAULT_MESSAGES = {
     'lottery': '{name} Hey! The lottery just finished. Use </lottery:957815874063061072> to check out who won and {command} to enter the next draw!',
     'minintboss': DEFAULT_MESSAGE_EVENT,
     'partner': '{name} Hey! **{partner}** found {loot} for you!',
-    'party-popper': '{name} Hey! Your party popper just ran out!',
+    'party-popper': DEFAULT_MESSAGE_BOOST,
     'pets': '{name} Hey! Your pet `{id}` is back! {emoji}',
     'pet-tournament': DEFAULT_MESSAGE_EVENT,
     'quest': DEFAULT_MESSAGE,
@@ -265,7 +266,6 @@ ACTIVITIES_COMMANDS = (
     'horse',
     'hunt',
     'lootbox',
-    'party-popper',
     'quest',
     'training',
     'vote',
@@ -281,6 +281,9 @@ ACTIVITIES_EVENTS = (
     'pet-tournament',
 )
 
+ACTIVITIES_BOOSTS = (
+    'party-popper',
+)
 
 ACTIVITIES_SLASH_COMMANDS = {
     'advent-calendar': 'xmas calendar',
@@ -1144,6 +1147,23 @@ FLEX_TITLES_PR_ASCENSION = [
     'We demand a giveaway!',
 ]
 
+FLEX_TITLES_EPIC_BERRY = [
+    'Time for some fruit salad!',
+    'Are these fruits or vegetables?',
+    'Margarita time!',
+    'Horse! Time to celebrate!',
+    'This might just be enough for a proper dessert',
+    'Only about a quadrillion more until epicness 100',
+]
+
+FLEX_TITLES_EPIC_BERRY_PARTNER = [
+    'Not even berries are safe anymore',
+    'The berries is where the fun ends, I swear',
+    'Hello 911, I want to report a robberry',
+    'Hey, I needed those for the margarita!',
+    'Reason for divorce: ',
+]
+
 FLEX_TITLES_EVENT_LB = [
     'They did what now?',
     'Unauthorized magic',
@@ -1189,6 +1209,23 @@ FLEX_TITLES_COINFLIP_EVENT = [
     'I didn\'t even know this could happen, lol',
     'Why is there a flex for this?',
     'MY COOOIIIINN NOOOOOOOOOOOOOOOOOOO',
+]
+
+FLEX_TITLES_MOB_DROPS = [
+    'Not sure I wanna know how this looting looked',
+    'SO MANY?!',
+    'Some people are happy with what they have, and then there\'s this person',
+    'T10 OP, PLS NERF',
+    'Now this is proper looting',
+    'This makes perfect sense',
+]
+
+FLEX_TITLES_MOB_DROPS_PARTNER = [
+    'YOU SHALL NOT... STEAL',
+    'Kinda embarrassing, really',
+    'Sucks to be you tbh',
+    'Easy come easy go',
+    'Get the divorce papers!',
 ]
 
 FLEX_TITLES_TIME_TRAVEL_1 = [
@@ -1447,6 +1484,24 @@ FLEX_THUMBNAILS_PR_ASCENSION = [
     'https://media.tenor.com/EoCQm0KsqP8AAAAC/pokemon-anime.gif',
 ]
 
+FLEX_THUMBNAILS_EPIC_BERRY = [
+    'https://media.tenor.com/yuSXdXW7tgsAAAAC/strawberry-juice.gif',
+    'https://media.tenor.com/oxTE2Jll0R4AAAAd/strawberries-cute-baby.gif',
+    'https://media.tenor.com/wjAK63POzTMAAAAd/monkey-monkey-eating.gif',
+    'https://media.tenor.com/CkRsEfWoUx4AAAAC/mmm-good-creepy.gif',
+    'https://media.tenor.com/sc7R5jLoYioAAAAd/cat-cats.gif',
+    'https://media.tenor.com/dtDUL6UpUg4AAAAd/yummy-strawberry.gif',
+]
+
+FLEX_THUMBNAILS_EPIC_BERRY_PARTNER = [
+    'https://media.tenor.com/jUAC58SFqzsAAAAC/bunny-steal.gif',
+    'https://media.tenor.com/g3VXd3gcG9wAAAAC/it-crowd-richard-ayoade.gif',
+    'https://media.tenor.com/_6FGp_11YQIAAAAd/worst-marriage-ever-family-feud-canada.gif',
+    'https://media.tenor.com/kbfjUFqT1psAAAAd/unromantic-bad-wedding.gif',
+    'https://media.tenor.com/sPe_qdC2idcAAAAC/modern-family-modern-family-joe.gif',
+    'https://media.tenor.com/0Jeb1C_TaBcAAAAd/now-thats-stealing-redd-foxx.gif',
+]
+
 FLEX_THUMBNAILS_EVENT_LB = [
     'https://media.tenor.com/wn2_Qq6flogAAAAC/magical-magic.gif',
     'https://media.giphy.com/media/mz1kJeDVueKC4/giphy.gif',
@@ -1487,6 +1542,24 @@ FLEX_THUMBNAILS_COINFLIP_EVENT = [
     'https://media.tenor.com/Adg8-XpUrEIAAAAd/john-travolta-confused.gif',
     'https://media.giphy.com/media/JQG2I0rQejbRQiDMQZ/giphy.gif',
     'https://media.tenor.com/8yBy9hKYpBkAAAAC/where-is-it-melody-pedras.gif',
+]
+
+FLEX_THUMBNAILS_MOB_DROPS = [
+    'https://media.tenor.com/AIjT_Z2IvQ8AAAAC/loot-gold.gif',
+    'https://media.tenor.com/OQ1HKTY5GKwAAAAC/look-at-that-loot-clash-banging.gif',
+    'https://media.tenor.com/LRifcomETsAAAAAC/1up-uptrennd.gif',
+    'https://media.tenor.com/5mzAxEwD4mUAAAAd/i-have-a-lot-of-loot-klaus.gif',
+    'https://media.tenor.com/Kp0EqMZrdIEAAAAC/legend-of.gif',
+    'https://media.tenor.com/TzCFttJJiakAAAAd/kgf-chapter2.gif',
+    'https://media.tenor.com/yg3y3tL18CUAAAAC/greedy-eating.gif',
+]
+
+FLEX_THUMBNAILS_MOB_DROPS_PARTNER = [
+    'https://media.tenor.com/0isSP3YRK7IAAAAC/truth-train-meme-looting.gif',
+    'https://media.tenor.com/UrGhgb_PnHIAAAAC/looting-stealing.gif',
+    'https://media.tenor.com/fHIje4LvTeYAAAAC/animation-art.gif',
+    'https://media.tenor.com/Jse3JnkVbKIAAAAd/hora-de-aventura-tren.gif',
+    'https://media.tenor.com/bR3QjhHR6-AAAAAC/robbery-robbed.gif',
 ]
 
 FLEX_THUMBNAILS_TIME_TRAVEL_1 = [

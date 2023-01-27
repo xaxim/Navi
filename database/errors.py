@@ -29,7 +29,7 @@ async def log_error(error: Union[Exception, str], ctx: Optional[Union[commands.C
     function_name = 'log_error'
     sql = f'INSERT INTO {table} (date_time, message_content, error, user_settings, jump_url) VALUES (?, ?, ?, ?, ?)'
     if hasattr(error, 'message'):
-        error_message = error.message
+        error_message = f'Error: {error.message}'
     else:
         error_message = str(error)
     try:
@@ -90,7 +90,7 @@ async def log_error(error: Union[Exception, str], ctx: Optional[Union[commands.C
     try:
         cur = settings.NAVI_DB.cursor()
         cur.execute(sql, (date_time, message_content, error_message, user_settings, jump_url))
-        logs.logger.error(f'\n{error_message}\n>> Check table "errors" in the database for more details.')
+        logs.logger.error(f'\n{error_message}\n>> Jump URL: {jump_url}')
     except sqlite3.Error as error:
         if ctx is not None:
             logs.logger.error(
