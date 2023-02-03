@@ -129,7 +129,7 @@ class CooldownsCog(commands.Cog):
                     hunt_timestring = hunt_match.group(1)
                     if ('together' in user_settings.last_hunt_mode
                         and user_settings.partner_donor_tier < user_settings.user_donor_tier):
-                        time_left = await functions.calculate_time_left_from_timestring(message, hunt_timestring.lower())
+                        time_left = await functions.parse_timestring_to_timedelta(hunt_timestring.lower())
                         partner_donor_tier = 3 if user_settings.partner_donor_tier > 3 else user_settings.partner_donor_tier
                         user_donor_tier = 3 if user_settings.user_donor_tier > 3 else user_settings.user_donor_tier
                         time_difference = ((60 * settings.DONOR_COOLDOWNS[partner_donor_tier])
@@ -263,12 +263,12 @@ class CooldownsCog(commands.Cog):
                 cd_activity = cooldown[0]
                 cd_timestring = cooldown[1]
                 cd_message = cooldown[2]
-                time_left = await functions.calculate_time_left_from_timestring(message, cd_timestring)
+                time_left = await functions.parse_timestring_to_timedelta(cd_timestring)
                 if time_left < timedelta(0): continue
                 if time_left.total_seconds() > 0:
                     reminder: reminders.Reminder = (
                         await reminders.insert_user_reminder(interaction_user.id, cd_activity, time_left,
-                                                            message.channel.id, cd_message, overwrite_message=False)
+                                                             message.channel.id, cd_message, overwrite_message=False)
                     )
                     if not reminder.record_exists:
                         await message.channel.send(strings.MSG_ERROR)

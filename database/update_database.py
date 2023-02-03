@@ -13,7 +13,7 @@ CURRENT_DIR = Path(__file__).parent
 DB_FILE = CURRENT_DIR / 'navi_db.db'
 NAVI_DB = sqlite3.connect(DB_FILE, isolation_level=None, detect_types=sqlite3.PARSE_DECLTYPES)
 NAVI_DB.row_factory = sqlite3.Row
-NAVI_DB_VERSION = 4
+NAVI_DB_VERSION = 5
 
 def get_user_version() -> int:
     """Returns the current user version from the database"""
@@ -302,6 +302,50 @@ if __name__ == '__main__':
             "ALTER TABLE users ADD ready_channel_duel INTEGER",
             "ALTER TABLE users ADD ready_channel_dungeon INTEGER",
             "ALTER TABLE users ADD ready_channel_horse INTEGER",
+        ]
+        for sql in sqls:
+            try:
+                cur.execute(sql)
+            except sqlite3.Error as error:
+                if 'duplicate column name' in error.args[0]:
+                    continue
+                else:
+                    raise
+
+    if db_version < 5:
+        sqls = [
+            "ALTER TABLE users ADD ready_after_all_commands BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_epic_berry_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_event_coinflip_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_event_enchant_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_event_farm_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_event_heal_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_event_lb_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_event_training_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_forge_cookie_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_hal_boo_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_lb_edgy_ultra_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_lb_godly_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_lb_godly_tt_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_lb_omega_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_lb_omega_ultra_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_lb_party_popper_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_lb_void_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_pets_catch_epic_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_pets_catch_tt_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_pets_claim_omega_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_pr_ascension_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_mob_drops_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_time_travel_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_work_hyperlog_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_work_ultimatelog_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_work_ultralog_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_work_superfish_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_work_watermelon_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_xmas_chimney_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_xmas_godly_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_xmas_snowball_enabled BOOLEAN NOT NULL DEFAULT (1)",
+            "ALTER TABLE guilds ADD auto_flex_xmas_void_enabled BOOLEAN NOT NULL DEFAULT (1)",
         ]
         for sql in sqls:
             try:

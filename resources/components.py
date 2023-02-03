@@ -107,6 +107,49 @@ class ToggleUserSettingsSelect(discord.ui.Select):
         embed = await self.view.embed_function(self.view.bot, self.view.ctx, self.view.user_settings)
         await interaction.response.edit_message(embed=embed, view=self.view)
 
+class ToggleServerSettingsSelect(discord.ui.Select):
+    """Toggle select that shows and toggles the status of server settings."""
+    def __init__(self, view: discord.ui.View, toggled_settings: Dict[str, str], placeholder: str,
+                 custom_id: Optional[str] = 'toggle_server_settings', row: Optional[int] = None):
+        self.toggled_settings = toggled_settings
+        options = []
+        options.append(discord.SelectOption(label='Enable all', value='enable_all', emoji=None))
+        options.append(discord.SelectOption(label='Disable all', value='disable_all', emoji=None))
+        for label, setting in toggled_settings.items():
+            setting_enabled = getattr(view.guild_settings, setting)
+            if isinstance(setting_enabled, users.UserAlert):
+                setting_enabled = getattr(setting_enabled, 'enabled')
+            emoji = emojis.ENABLED if setting_enabled else emojis.DISABLED
+            options.append(discord.SelectOption(label=label, value=setting, emoji=emoji))
+        super().__init__(placeholder=placeholder, min_values=1, max_values=1, options=options, row=row,
+                         custom_id=custom_id)
+
+    async def callback(self, interaction: discord.Interaction):
+        select_value = self.values[0]
+        kwargs = {}
+        if select_value in ('enable_all','disable_all'):
+            enabled = True if select_value == 'enable_all' else False
+            for setting in self.toggled_settings.values():
+                if not setting.endswith('_enabled'):
+                    setting = f'{setting}_enabled'
+                kwargs[setting] = enabled
+        else:
+            setting_value = getattr(self.view.guild_settings, select_value)
+            if isinstance(setting_value, users.UserAlert):
+                setting_value = getattr(setting_value, 'enabled')
+            if not select_value.endswith('_enabled'):
+                select_value = f'{select_value}_enabled'
+            kwargs[select_value] = not setting_value
+        await self.view.guild_settings.update(**kwargs)
+        for child in self.view.children.copy():
+            if child.custom_id == self.custom_id:
+                self.view.remove_item(child)
+                self.view.add_item(ToggleServerSettingsSelect(self.view, self.toggled_settings,
+                                                            self.placeholder, self.custom_id))
+                break
+        embed = await self.view.embed_function(self.view.bot, self.view.ctx, self.view.guild_settings)
+        await interaction.response.edit_message(embed=embed, view=self.view)
+
 
 class ToggleReadySettingsSelect(discord.ui.Select):
     """Toggle select that shows and toggles the status of ready settings."""
@@ -168,6 +211,10 @@ class ManageClanSettingsSelect(discord.ui.Select):
                                             value='set_channel', emoji=emojis.ADD))
         options.append(discord.SelectOption(label='Remove guild channel',
                                             value='reset_channel', emoji=emojis.REMOVE))
+        if (view.clan_settings.quest_user_id is not None
+            and view.clan_settings.quest_user_id == view.ctx.author.id):
+            options.append(discord.SelectOption(label='Remove guild quest',
+                                                value='remove_clan_quest', emoji=emojis.REMOVE))
         super().__init__(placeholder='Change settings', min_values=1, max_values=1, options=options, row=row,
                          custom_id='manage_clan_settings')
 
@@ -232,6 +279,8 @@ class ManageClanSettingsSelect(discord.ui.Select):
             else:
                 await confirm_interaction.edit_original_response(content='Aborted', view=None)
                 return
+        elif select_value == 'remove_clan_quest':
+            await self.view.clan_settings.update(quest_user_id=None)
         for child in self.view.children.copy():
             if isinstance(child, ManageClanSettingsSelect):
                 self.view.remove_item(child)
@@ -248,8 +297,8 @@ class ManageReadySettingsSelect(discord.ui.Select):
     """Select to change ready settings"""
     def __init__(self, view: discord.ui.View, row: Optional[int] = None):
         options = []
+        frequency = 'hunt only' if view.user_settings.ready_after_all_commands else 'all commands'
         message_style = 'normal message' if view.user_settings.ready_as_embed else 'embed'
-        cmd_cd_action = 'Hide' if view.user_settings.cmd_cd_visible else 'Show'
         up_next_reminder_emoji = emojis.ENABLED if view.user_settings.ready_up_next_visible else emojis.DISABLED
         up_next_style = 'static time' if view.user_settings.ready_up_next_as_timestamp else 'timestamp'
         if view.user_settings.ready_pets_claim_after_every_pet:
@@ -264,6 +313,8 @@ class ManageReadySettingsSelect(discord.ui.Select):
         other_position = 'on bottom' if view.user_settings.ready_other_on_top else 'on top'
         options.append(discord.SelectOption(label=f'Auto-ready',
                                             value='toggle_auto_ready', emoji=auto_ready_emoji))
+        options.append(discord.SelectOption(label=f'Show ready commands after {frequency}',
+                                            value='toggle_frequency', emoji=None))
         options.append(discord.SelectOption(label=f'Show ready commands as {message_style}',
                                             value='toggle_message_style', emoji=None))
         options.append(discord.SelectOption(label='Change embed color',
@@ -291,6 +342,10 @@ class ManageReadySettingsSelect(discord.ui.Select):
             await self.view.user_settings.update(auto_ready_enabled=not self.view.user_settings.auto_ready_enabled)
         elif select_value == 'toggle_alert':
             await self.view.clan_settings.update(alert_visible=not self.view.clan_settings.alert_visible)
+        elif select_value == 'toggle_frequency':
+            await self.view.user_settings.update(
+                ready_after_all_commands=not self.view.user_settings.ready_after_all_commands
+            )
         elif select_value == 'toggle_message_style':
             await self.view.user_settings.update(ready_as_embed=not self.view.user_settings.ready_as_embed)
         elif select_value == 'change_embed_color':
@@ -298,7 +353,9 @@ class ManageReadySettingsSelect(discord.ui.Select):
             await interaction.response.send_modal(modal)
             return
         elif select_value == 'toggle_up_next':
-            await self.view.user_settings.update(ready_up_next_visible=not self.view.user_settings.ready_up_next_visible)
+            await self.view.user_settings.update(
+                ready_up_next_visible=not self.view.user_settings.ready_up_next_visible
+            )
         elif select_value == 'toggle_up_next_timestamp':
             await self.view.user_settings.update(
                 ready_up_next_as_timestamp=not self.view.user_settings.ready_up_next_as_timestamp
@@ -318,7 +375,8 @@ class ManageReadySettingsSelect(discord.ui.Select):
                 self.view.remove_item(child)
                 self.view.add_item(ManageReadySettingsSelect(self.view))
                 break
-        embed = await self.view.embed_function(self.view.bot, self.view.ctx, self.view.user_settings, self.view.clan_settings)
+        embed = await self.view.embed_function(self.view.bot, self.view.ctx, self.view.user_settings,
+                                               self.view.clan_settings)
         if interaction.response.is_done():
             await interaction.message.edit(embed=embed, view=self.view)
         else:
@@ -828,15 +886,16 @@ class ManageServerSettingsSelect(discord.ui.Select):
     """Select to change server settings"""
     def __init__(self, view: discord.ui.View, row: Optional[int] = None):
         options = []
+        auto_flex_emoji = emojis.ENABLED if view.guild_settings.auto_flex_enabled else emojis.DISABLED
         reminder_action = 'Disable' if view.guild_settings.auto_flex_enabled else 'Enable'
         options.append(discord.SelectOption(label='Change prefix',
                                             value='set_prefix', emoji=None))
         options.append(discord.SelectOption(label=f'{reminder_action} auto flex alerts',
-                                            value='toggle_auto_flex'))
+                                            value='toggle_auto_flex', emoji=auto_flex_emoji))
         options.append(discord.SelectOption(label='Set this channel as auto flex channel',
-                                            value='set_channel', emoji=None))
+                                            value='set_channel', emoji=emojis.ADD))
         options.append(discord.SelectOption(label='Reset auto flex channel',
-                                            value='reset_channel', emoji=None))
+                                            value='reset_channel', emoji=emojis.REMOVE))
         super().__init__(placeholder='Change settings', min_values=1, max_values=1, options=options, row=row,
                          custom_id='manage_server_settings')
 
