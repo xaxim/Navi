@@ -9,27 +9,27 @@ LEADERBOARD_2 = ':two:'
 LEADERBOARD_3 = ':three:'
 LEADERBOARD_4 = ':four:'
 LEADERBOARD_5 = ':five:'
-WORST_RAIDS = '<:anime_sus:834673942530359337>'
+WORST_RAIDS = '<:anime_sus:1055917478598938756>'
 
 # EPIC RPG alchemy items
-FLASK = '<:flask:???>'
-POTION_BANANA = '<:potion_banana:???>'
-POTION_COOKIE = '<:potion_cookie:???>'
-POTION_DRAGON_BREATH = '<:potion_dragon_breath:???>'
-POTION_ELECTRONICAL = '<:potion_electronical:???>'
-POTION_FISH = '<:potion_fish:???>'
-POTION_INVERTED = '<:potion_inverted:???>'
-POTION_JUICE = '<:potion_juice:???>'
-POTION_JUMPY = '<:potion_jumpy:???>'
-POTION_KING = '<:potion_king:???>'
-POTION_LIQUID_HAIR = '<:potion_liquid_hair:???>'
-POTION_LOOTBOX = '<:potion_lootbox:???>'
-POTION_MONSTER = '<:potion_monster:???>'
-POTION_POTION = '<:potion_potion:???>'
-POTION_TIME = '<:potion_time:???>'
-POTION_TRIPLE = '<:potion_triple:???>'
-POTION_VOID = '<:potion_void:???>'
-POTION_WOOD = '<:potion_wood:???>'
+FLASK = '<:flask:1074104480263573604>'
+POTION_BANANA = '<:potion_banana:1074104483027624066>'
+POTION_COOKIE = '<:potion_cookie:1074104484579508264>'
+POTION_DRAGON_BREATH = '<:potion_dragon_breath:1074104487251300403>'
+POTION_ELECTRONICAL = '<:potion_electronical:1074104488933212242>'
+POTION_FISH = '<:potion_fish:1074104491705634816>'
+POTION_INVERTED = '<:potion_inverted:1074104493270114474>'
+POTION_JUICE = '<:potion_juice:1074104495841230980>'
+POTION_JUMPY = '<:potion_jumpy:1074104497443438622>'
+POTION_KING = '<:potion_king:1074104538593775646>'
+POTION_LIQUID_HAIR = '<:potion_liquid_hair:1074104540158230568>'
+POTION_LOOTBOX = '<:potion_lootbox:1074104542951637052>'
+POTION_MONSTER = '<:potion_monster:1074104545447260281>'
+POTION_POTION = '<:potion_potion:1074104547129180281>'
+POTION_TIME = '<:potion_time:1074104550329434113>'
+POTION_TRIPLE = '<:potion_triple:1074104551554175118>'
+POTION_VOID = '<:potion_void:1074104554389516368>'
+POTION_WOOD = '<:potion_wood:1074104555874308187>'
 
 # EPIC RPG event items
 HORSE_ARMOR   = '<:horsearmor:1055917534374805575>'
@@ -87,13 +87,13 @@ ZOMBIE_EYE = '<:zombie_eye:1059242156390371328>'
 
 # EPIC RPG misc
 ASCENSION = '🌟'
-DEV_BUFF = '<:devbuff:1071442813541175378>'
+DEV_BUFF = '<:devbuff:1074105985536372766>'
 MOD_BUFF = '💠'
-GODLY_COOKIE = '<:godlycookie:879251636806098975>'
-MOB_ANCIENT_DRAGON = '<:ancientdragon:818542002332893204>'
-SWORD_GODLY = '<:godlysword:799388569688211536>'
-TIME_CAPSULE = '<:timecapsule:1020280105668456458>'
-TIME_TRAVEL = '<:timetravel:947028582818009118>'
+GODLY_COOKIE   = '<:godlycookie:1055918096520593529>'
+MOB_ANCIENT_DRAGON   = '<:ancientdragon:1055918094767374337>'
+SWORD_GODLY   = '<:godlysword:1055918097606914059>'
+TIME_CAPSULE   = '<:timecapsule:1055918099737620501>'
+TIME_TRAVEL   = '<:timetravel:1055918101490839723>'
 
 # EPIC RPG pets
 PET_CAT   = '<:cat:1055918664454508604>'
@@ -156,7 +156,7 @@ ERROR = '<:redcross:1055919130974375936>'
 GITHUB = '<:github:1055919124880052284>'
 NAVI = '<:navi_orange:1065262433863729293>'
 PARTNER_ALERT = '💌'
-PRIVACY_POLICY = '<:privacy:1010927920832847882>'
+PRIVACY_POLICY = '<:privacxy:1055919129548308600>'
 REMOVE = '<:remove:1065751030563885206>'
 WARNING = '⚠️'
 
@@ -182,4 +182,30 @@ MONSTER_DROP_AREAS_EMOJIS = {
     18: DARK_ENERGY,
     19: DARK_ENERGY,
     20: DARK_ENERGY,
+}
+
+
+BOOST_ITEMS_EMOJIS = {
+    'banana potion': POTION_BANANA,
+    'cookie potion': POTION_COOKIE,
+    'dev boost': DEV_BUFF,
+    'dev buff': DEV_BUFF,
+    'dragon breath potion': POTION_DRAGON_BREATH,
+    'electronical potion': POTION_ELECTRONICAL,
+    'fish potion': POTION_FISH,
+    'inverted potion': POTION_INVERTED,
+    'juice potion': POTION_JUICE,
+    'jumpy potion': POTION_JUMPY,
+    'king potion': POTION_KING,
+    'liquid hair potion': POTION_LIQUID_HAIR,
+    'lootbox potion': POTION_LOOTBOX,
+    'mod boost': MOD_BUFF,
+    'mod buff': MOD_BUFF,
+    'monster potion': POTION_MONSTER,
+    'party popper': PARTY_POPPER,
+    'potion potion': POTION_POTION,
+    'time potion': POTION_TIME,
+    'triple potion': POTION_TRIPLE,
+    'void potion': POTION_VOID,
+    'wood potion': POTION_WOOD,
 }
