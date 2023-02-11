@@ -62,7 +62,7 @@ class CooldownsCog(commands.Cog):
             user_id_match = re.search(regex.USER_ID_FROM_ICON_URL, icon_url)
             if user_id_match:
                 user_id = int(user_id_match.group(1))
-                embed_users.append(await message.guild.fetch_member(user_id))
+                embed_users.append(message.guild.get_member(user_id))
             else:
                 user_name_match = re.search(regex.USERNAME_FROM_EMBED_AUTHOR, message_author)
                 if user_name_match:
@@ -231,12 +231,7 @@ class CooldownsCog(commands.Cog):
                 farm_match = re.search(r"farm`\*\* \(\*\*(.+?)\*\*", message_fields.lower())
                 if farm_match:
                     farm_timestring = farm_match.group(1)
-                    user_command = await functions.get_slash_command(user_settings, 'farm')
-                    if user_settings.last_farm_seed != '':
-                        if user_settings.slash_mentions_enabled:
-                            user_command = f"{user_command} `seed: {user_settings.last_farm_seed}`"
-                        else:
-                            user_command = f"{user_command} `{user_settings.last_farm_seed}`".replace('` `', ' ')
+                    user_command = await functions.get_farm_command(user_settings)
                     farm_message = user_settings.alert_farm.message.replace('{command}', user_command)
                     cooldowns.append(['farm', farm_timestring.lower(), farm_message])
                 else:
@@ -309,7 +304,7 @@ class CooldownsCog(commands.Cog):
             user_id_match = re.search(regex.USER_ID_FROM_ICON_URL, icon_url)
             if user_id_match:
                 user_id = int(user_id_match.group(1))
-                embed_users.append(await message.guild.fetch_member(user_id))
+                embed_users.append(message.guild.get_member(user_id))
             else:
                 user_name_match = re.search(regex.USERNAME_FROM_EMBED_AUTHOR, message_author)
                 if user_name_match:

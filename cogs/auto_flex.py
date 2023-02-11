@@ -12,6 +12,7 @@ from resources import emojis, exceptions, functions, regex, settings, strings
 
 
 FLEX_TITLES = {
+    'brew_electronical': strings.FLEX_TITLES_BREW_ELECTRONICAL,
     'epic_berry': strings.FLEX_TITLES_EPIC_BERRY,
     'epic_berry_partner': strings.FLEX_TITLES_EPIC_BERRY_PARTNER,
     'event_coinflip': strings.FLEX_TITLES_EVENT_COINFLIP,
@@ -61,6 +62,7 @@ FLEX_TITLES = {
 }
 
 FLEX_THUMBNAILS = {
+    'brew_electronical': strings.FLEX_THUMBNAILS_BREW_ELECTRONICAL,
     'epic_berry': strings.FLEX_THUMBNAILS_EPIC_BERRY,
     'epic_berry_partner': strings.FLEX_THUMBNAILS_EPIC_BERRY_PARTNER,
     'event_coinflip': strings.FLEX_THUMBNAILS_EVENT_COINFLIP,
@@ -233,7 +235,7 @@ class AutoFlexCog(commands.Cog):
                     user_id_match = re.search(regex.USER_ID_FROM_ICON_URL, icon_url)
                     if user_id_match:
                         user_id = int(user_id_match.group(1))
-                        user = await message.guild.fetch_member(user_id)
+                        user = message.guild.get_member(user_id)
                     else:
                         user_name_match = re.search(regex.USERNAME_FROM_EMBED_AUTHOR, embed_autor)
                         if user_name_match:
@@ -400,7 +402,11 @@ class AutoFlexCog(commands.Cog):
                 'omega lootbox',
             ]
             if (any(search_string in embed_title.lower() for search_string in search_strings)
-                and any(search_string in embed_fields.lower() for search_string in search_strings_items)):
+                and (
+                    any(search_string in embed_fields.lower() for search_string in search_strings_items)
+                    or any(search_string in embed_description.lower() for search_string in search_strings_items)
+                    )
+                ):
                 guild_settings: guilds.Guild = await guilds.get_guild(message.guild.id)
                 if not guild_settings.auto_flex_enabled: return
                 user_id = user_name = user_command_message = None
@@ -409,7 +415,7 @@ class AutoFlexCog(commands.Cog):
                     user_id_match = re.search(regex.USER_ID_FROM_ICON_URL, icon_url)
                     if user_id_match:
                         user_id = int(user_id_match.group(1))
-                        user = await message.guild.fetch_member(user_id)
+                        user = message.guild.get_member(user_id)
                     else:
                         user_name_match = re.search(regex.USERNAME_FROM_EMBED_AUTHOR, embed_autor)
                         if user_name_match:
@@ -447,7 +453,7 @@ class AutoFlexCog(commands.Cog):
                     user_id_match = re.search(regex.USER_ID_FROM_ICON_URL, icon_url)
                     if user_id_match:
                         user_id = int(user_id_match.group(1))
-                        user = await message.guild.fetch_member(user_id)
+                        user = message.guild.get_member(user_id)
                     else:
                         user_name_match = re.search(regex.USERNAME_FROM_EMBED_AUTHOR, embed_autor)
                         if user_name_match:
@@ -487,7 +493,7 @@ class AutoFlexCog(commands.Cog):
                     user_id_match = re.search(regex.USER_ID_FROM_ICON_URL, icon_url)
                     if user_id_match:
                         user_id = int(user_id_match.group(1))
-                        user = await message.guild.fetch_member(user_id)
+                        user = message.guild.get_member(user_id)
                     else:
                         user_name_match = re.search(regex.USERNAME_FROM_EMBED_AUTHOR, embed_autor)
                         if user_name_match:
@@ -534,7 +540,7 @@ class AutoFlexCog(commands.Cog):
                     user_id_match = re.search(regex.USER_ID_FROM_ICON_URL, icon_url)
                     if user_id_match:
                         user_id = int(user_id_match.group(1))
-                        user = await message.guild.fetch_member(user_id)
+                        user = message.guild.get_member(user_id)
                     else:
                         user_name_match = re.search(regex.USERNAME_FROM_EMBED_AUTHOR, embed_autor)
                         if user_name_match:
@@ -569,9 +575,7 @@ class AutoFlexCog(commands.Cog):
                     if tt_match:
                         time_travel_count = int(tt_match.group(1))
                     else:
-                        await functions.add_warning_reaction(message)
-                        await errors.log_error('Time travel count not found in time travel message.', message)
-                        return
+                        time_travel_count = 0
                 await user_settings.update(time_travel_count=time_travel_count)
 
             # Time travel
@@ -764,7 +768,7 @@ class AutoFlexCog(commands.Cog):
                     user_id_match = re.search(regex.USER_ID_FROM_ICON_URL, icon_url)
                     if user_id_match:
                         user_id = int(user_id_match.group(1))
-                        user = await message.guild.fetch_member(user_id)
+                        user = message.guild.get_member(user_id)
                     else:
                         user_command_message = (
                             await messages.find_message(message.channel.id, regex.COMMAND_ULTRAINING,
@@ -1246,6 +1250,8 @@ class AutoFlexCog(commands.Cog):
                                 or 'pretendiendo' in message_content_user.lower()
                                 or 'fingindo' in message_content_user.lower()):
                                 drop_amount_check = drop_amount / 3
+                            elif drop == 'dragon scale' and user_settings.potion_dragon_breath_active:
+                                drop_amount_check = drop_amount / 2
                             else:
                                 drop_amount_check = drop_amount
                             if drop_amount_check >= mob_drops_thresholds[drop]:
@@ -1295,6 +1301,8 @@ class AutoFlexCog(commands.Cog):
                                     or 'pretendiendo' in message_content_partner.lower()
                                     or 'fingindo' in message_content_partner.lower()):
                                     drop_amount_check = drop_amount / 3
+                                elif drop == 'dragon scale' and (drop_amount % 2) == 0:
+                                    drop_amount_check = drop_amount / 2
                                 else:
                                     drop_amount_check = drop_amount
                                 if drop_amount_check >= mob_drops_thresholds[drop]:
@@ -1804,6 +1812,38 @@ class AutoFlexCog(commands.Cog):
                     f'So we\'re getting rewarded for being a bad friend now? Hope you feel bad, okay?'
                 )
                 await self.send_auto_flex_message(message, guild_settings, user_settings, user, 'hal_boo',
+                                                  description)
+
+            # Brew electronical potion
+            search_strings = [
+                '**electronical potion**, you\'ve received the following boosts', #English
+                '**electronical potion**, you\'ve received the following boosts', #Spanish, MISSING
+                '**electronical potion**, you\'ve received the following boosts', #Portuguese, MISSING
+            ]
+            if any(search_string in message_content.lower() for search_string in search_strings):
+                guild_settings: guilds.Guild = await guilds.get_guild(message.guild.id)
+                if not guild_settings.auto_flex_enabled: return
+                user = await functions.get_interaction_user(message)
+                if user is None:
+                    user_command_message = (
+                        await messages.find_message(message.channel.id, regex.COMMAND_ALCHEMY)
+                    )
+                    if user_command_message is None:
+                        await functions.add_warning_reaction(message)
+                        await errors.log_error('Couldn\'t find a command for the dragon breath potion auto flex.', message)
+                        return
+                    user = user_command_message.author
+                try:
+                    user_settings: users.User = await users.get_user(user.id)
+                except exceptions.FirstTimeUserError:
+                    return
+                if not user_settings.bot_enabled or not user_settings.auto_flex_enabled: return
+                description = (
+                    f'**{user.name}** is thirsty, but unlike, you know, _normal_ people, it has to be the rather exclusive '
+                    f'{emojis.POTION_ELECTRONICAL} **Electronical potion** for them.\n'
+                    f'The snob.'
+                )
+                await self.send_auto_flex_message(message, guild_settings, user_settings, user, 'brew_electronical',
                                                   description)
 
 # Initialization

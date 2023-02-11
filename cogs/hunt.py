@@ -69,7 +69,7 @@ class HuntCog(commands.Cog):
                 if user_id_match:
                     user_id = int(user_id_match.group(1))
                     try:
-                        embed_users.append(await message.guild.fetch_member(user_id))
+                        embed_users.append(message.guild.get_member(user_id))
                     except discord.NotFound:
                         pass
                 else:
@@ -203,6 +203,7 @@ class HuntCog(commands.Cog):
                 search_strings_event_mobs = [
                     'horslime',
                     'christmas slime',
+                    'pink wolf',
                 ]
                 if any(search_string in message_content.lower() for search_string in search_strings_event_mobs):
                     search_strings_together = [

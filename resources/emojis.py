@@ -1,5 +1,6 @@
 # emojis.py
 
+
 # Clan leaderboard
 BEST_RAIDS   = '<:panda_cool:1055917480155029675>'
 ENERGY = '🔅'
@@ -8,7 +9,27 @@ LEADERBOARD_2 = ':two:'
 LEADERBOARD_3 = ':three:'
 LEADERBOARD_4 = ':four:'
 LEADERBOARD_5 = ':five:'
-WORST_RAIDS   = '<:anime_sus:1055917478598938756>'
+WORST_RAIDS = '<:anime_sus:834673942530359337>'
+
+# EPIC RPG alchemy items
+FLASK = '<:flask:???>'
+POTION_BANANA = '<:potion_banana:???>'
+POTION_COOKIE = '<:potion_cookie:???>'
+POTION_DRAGON_BREATH = '<:potion_dragon_breath:???>'
+POTION_ELECTRONICAL = '<:potion_electronical:???>'
+POTION_FISH = '<:potion_fish:???>'
+POTION_INVERTED = '<:potion_inverted:???>'
+POTION_JUICE = '<:potion_juice:???>'
+POTION_JUMPY = '<:potion_jumpy:???>'
+POTION_KING = '<:potion_king:???>'
+POTION_LIQUID_HAIR = '<:potion_liquid_hair:???>'
+POTION_LOOTBOX = '<:potion_lootbox:???>'
+POTION_MONSTER = '<:potion_monster:???>'
+POTION_POTION = '<:potion_potion:???>'
+POTION_TIME = '<:potion_time:???>'
+POTION_TRIPLE = '<:potion_triple:???>'
+POTION_VOID = '<:potion_void:???>'
+POTION_WOOD = '<:potion_wood:???>'
 
 # EPIC RPG event items
 HORSE_ARMOR   = '<:horsearmor:1055917534374805575>'
@@ -66,11 +87,13 @@ ZOMBIE_EYE = '<:zombie_eye:1059242156390371328>'
 
 # EPIC RPG misc
 ASCENSION = '🌟'
-GODLY_COOKIE   = '<:godlycookie:1055918096520593529>'
-MOB_ANCIENT_DRAGON   = '<:ancientdragon:1055918094767374337>'
-SWORD_GODLY   = '<:godlysword:1055918097606914059>'
-TIME_CAPSULE   = '<:timecapsule:1055918099737620501>'
-TIME_TRAVEL   = '<:timetravel:1055918101490839723>'
+DEV_BUFF = '<:devbuff:1071442813541175378>'
+MOD_BUFF = '💠'
+GODLY_COOKIE = '<:godlycookie:879251636806098975>'
+MOB_ANCIENT_DRAGON = '<:ancientdragon:818542002332893204>'
+SWORD_GODLY = '<:godlysword:799388569688211536>'
+TIME_CAPSULE = '<:timecapsule:1020280105668456458>'
+TIME_TRAVEL = '<:timetravel:947028582818009118>'
 
 # EPIC RPG pets
 PET_CAT   = '<:cat:1055918664454508604>'
