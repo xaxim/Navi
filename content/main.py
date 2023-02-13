@@ -127,9 +127,6 @@ async def embed_about(bot: commands.Bot, api_latency: datetime) -> discord.Embed
     user_count = await users.get_user_count()
     all_settings = await settings_db.get_settings()
     uptime = datetime.utcnow().replace(microsecond=0) - datetime.fromisoformat(all_settings['startup_time'])
-    version_file = open(settings.VERSION_FILE, 'r')
-    version = version_file.readline().rstrip('\n')
-    version_file.close()
     general = (
         f'{emojis.BP} {len(bot.guilds):,} servers\n'
         f'{emojis.BP} {user_count:,} users\n'
@@ -156,6 +153,7 @@ async def embed_about(bot: commands.Bot, api_latency: datetime) -> discord.Embed
         'Visual Studio Code',
         'Herbal tea',
         'DXRacer',
+        'Miriel'
     ]
     img_navi = discord.File(settings.IMG_NAVI, filename='navi.png')
     image_url = 'attachment://navi.png'
