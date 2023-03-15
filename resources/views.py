@@ -2,7 +2,7 @@
 """Contains global interaction views"""
 
 import random
-from typing import Dict, List, Optional, Union
+from typing import List, Optional, Union
 
 import discord
 from discord.ext import commands
@@ -21,6 +21,7 @@ COMMANDS_SETTINGS = {
     'Reminder messages': settings_cmd.command_settings_messages,
     'User': settings_cmd.command_settings_user,
 }
+
 
 class AutoReadyView(discord.ui.View):
     """View with button to toggle the auto_ready feature.
@@ -193,6 +194,7 @@ class SettingsClanView(discord.ui.View):
     async def on_timeout(self) -> None:
         await functions.edit_interaction(self.interaction, view=None)
         self.stop()
+
 
 class SettingsHelpersView(discord.ui.View):
     """View with a all components to manage helper settings.
