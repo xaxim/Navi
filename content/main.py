@@ -190,7 +190,6 @@ async def embed_about(bot: commands.Bot, api_latency: datetime) -> discord.Embed
         'Visual Studio Code',
         'Herbal tea',
         'DXRacer',
-        'Miriel'
     ]
     img_navi = discord.File(settings.IMG_NAVI, filename='navi.png')
     image_url = 'attachment://navi.png'
