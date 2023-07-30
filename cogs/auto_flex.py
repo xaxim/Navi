@@ -137,6 +137,14 @@ FLEX_COLUMNS = {
     'time_travel_150': 'time_travel',
     'time_travel_200': 'time_travel',
     'time_travel_300': 'time_travel',
+    'time_travel_400': 'time_travel',
+    'time_travel_420': 'time_travel',
+    'time_travel_500': 'time_travel',
+    'time_travel_600': 'time_travel',
+    'time_travel_700': 'time_travel',
+    'time_travel_800': 'time_travel',
+    'time_travel_900': 'time_travel',
+    'time_travel_999': 'time_travel',
 }
 
 class AutoFlexCog(commands.Cog):
@@ -161,10 +169,12 @@ class AutoFlexCog(commands.Cog):
             title = random.choice(FLEX_TITLES[event]),
             description = description,
         )
-        if 'time_travel' in event or 'ascension' in event:
+        if 'ascension' in event:
             author = f'{user.name} is advancing!'
         elif 'chimney' in event:
             author = f'{user.name} got stuck!'
+        elif 'time_travel' in event:
+            author = f'{user.name} is traveling in time!'
         elif 'a18_partner' in event:
             author = f'{user.name} is being mean!'
         elif 'a18' in event:
@@ -701,6 +711,52 @@ class AutoFlexCog(commands.Cog):
                     description = (
                         f'**{user.name}** reached {emojis.TIME_TRAVEL} **SPARTA**!\n'
                     )
+                elif time_travel_count_old < 400 and time_travel_count_new >= 400:
+                    event = 'time_travel_400'
+                    description = (
+                        f'**{user.name}** traveled in time **400** times {emojis.TIME_TRAVEL}! But why?\n'
+                    )
+                elif time_travel_count_old < 420 and time_travel_count_new >= 420:
+                    event = 'time_travel_420'
+                    description = (
+                        f'**4:20 {user.name}**. The usual place.'
+                    )
+                elif time_travel_count_old < 500 and time_travel_count_new >= 500:
+                    event = 'time_travel_500'
+                    description = (
+                        f'Did you see that? It\'s **{user.name}** plopping through time. For the freaking **500**th time.\n'
+                        f'{emojis.TIME_TRAVEL}\n'
+                    )
+                elif time_travel_count_old < 600 and time_travel_count_new >= 600:
+                    event = 'time_travel_600'
+                    description = (
+                        f'Pretty sury **{user.name}** forgot by now which time they actually belong to after '
+                        f'**600** {emojis.TIME_TRAVEL} time travels.\n'
+                    )
+                elif time_travel_count_old < 700 and time_travel_count_new >= 700:
+                    event = 'time_travel_700'
+                    description = (
+                        f'Did you know that there is such a thing as playing a game too much? **{user.name}** can.\n'
+                        f'They just reached **700** {emojis.TIME_TRAVEL} time travels, and it scares me.\n'
+                    )
+                elif time_travel_count_old < 800 and time_travel_count_new >= 800:
+                    event = 'time_travel_800'
+                    description = (
+                        f'**800** {emojis.TIME_TRAVEL} time travels. It\'s rather crazy. But I get it now - '
+                        f'**{user.name}** is probably training for the time olympics on Galifrey.'
+                    )
+                elif time_travel_count_old < 900 and time_travel_count_new >= 900:
+                    event = 'time_travel_900'
+                    description = (
+                        f'Ted just called **{user.name}** and wanted his phone booth back. After learning it was '
+                        f'used for **900** {emojis.TIME_TRAVEL} time travels, he was too scared to take it back tho.'
+                    )
+                elif time_travel_count_old < 999 and time_travel_count_new >= 999:
+                    event = 'time_travel_999'
+                    description = (
+                        f'**{user.name}** traveled in time for **999** times and thus broke Epic RPG Guide. Good job.\n'
+                        f'Hope your proud. Damn it.'
+                    )
                 else:
                     return
                 await self.send_auto_flex_message(message, guild_settings, user_settings, user, event,
@@ -1140,7 +1196,8 @@ class AutoFlexCog(commands.Cog):
                 if not guild_settings.auto_flex_enabled: return
                 user = await functions.get_interaction_user(message)
                 hardmode = together = False
-                old_format = True if '__**' not in message_content.lower() else False
+                new_format_match = re.search(r'^__\*\*', message_content)
+                old_format = False if new_format_match else True
                 search_strings_hardmode = [
                     '(but stronger', #English
                     '(pero más fuerte', #Spanish
@@ -1327,15 +1384,15 @@ class AutoFlexCog(commands.Cog):
                         lootbox_match = re.search(pattern, message_content_user, re.IGNORECASE)
                         if lootbox_match:
                             drop_amount = int(lootbox_match.group(1))
+                            if drop == 'dragon scale' and user_settings.potion_dragon_breath_active:
+                                drop_amount_check = drop_amount / 2
+                            else:
+                                drop_amount_check = drop_amount
                             if (user_settings.current_area == 0
                                 or 'pretending' in message_content_user.lower()
                                 or 'pretendiendo' in message_content_user.lower()
                                 or 'fingindo' in message_content_user.lower()):
-                                drop_amount_check = drop_amount / 3
-                            elif drop == 'dragon scale' and user_settings.potion_dragon_breath_active:
-                                drop_amount_check = drop_amount / 2
-                            else:
-                                drop_amount_check = drop_amount
+                                drop_amount_check = drop_amount_check / 3
                             if drop_amount_check >= mob_drops_thresholds[drop]:
                                 break
                     if drop_amount_check < mob_drops_thresholds[drop]: continue
