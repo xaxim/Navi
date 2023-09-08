@@ -207,7 +207,7 @@ class WorkCog(commands.Cog):
                     if user_name_match:
                         user_name = user_name_match.group(1)
                     else:
-                        if 'golden pan' in message_content.lower(): return
+                        if 'golden pan' in message_content.lower() or 'celebration coins' in message_content.lower(): return
                         await functions.add_warning_reaction(message)
                         await errors.log_error('User name not found in work message.', message)
                         return
