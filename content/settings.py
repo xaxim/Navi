@@ -1004,6 +1004,11 @@ async def embed_settings_ready(bot: discord.Bot, ctx: discord.ApplicationContext
         f'{emojis.BP} **{strings.SLASH_COMMANDS["pets claim"]} type**: `{pets_claim_type}`\n'
         f'{emojis.BP} **Position of "other commands"**: `{other_field_position}`\n'
     )
+    trade_daily = (
+        f'_Daily trades will only show up if you have a top hat!_\n'
+        f'{emojis.BP} **Daily trades**: {await bool_to_text(user_settings.ready_trade_daily_visible)}\n'
+        f'{emojis.BP} **When daily trades are done**: {await bool_to_text(user_settings.ready_trade_daily_completed_visible)}\n'
+    )
     up_next_reminder = (
         f'{emojis.BP} **Reminder**: {await bool_to_text(user_settings.ready_up_next_visible)}\n'
         f'{emojis.BP} **Style**: `{up_next_tyle}`\n'
@@ -1032,6 +1037,7 @@ async def embed_settings_ready(bot: discord.Bot, ctx: discord.ApplicationContext
         )
     )
     embed.add_field(name='SETTINGS', value=field_settings, inline=False)
+    embed.add_field(name='DAILY TRADES', value=trade_daily, inline=False)
     embed.add_field(name='UP NEXT REMINDER', value=up_next_reminder, inline=False)
     embed.add_field(name='OTHER COMMANDS', value=other_commands, inline=False)
     embed.add_field(name='VISIBLE COMMANDS & COMMAND CHANNELS', value=command_event_reminders, inline=False)
@@ -1065,13 +1071,13 @@ async def embed_settings_ready_reminders(bot: discord.Bot, ctx: discord.Applicat
         #f'{emojis.BP} **Advent calendar** {emojis.XMAS_SOCKS}: {await bool_to_text(user_settings.alert_advent.visible)}\n'
         f'{emojis.BP} **Adventure**: {await bool_to_text(user_settings.alert_adventure.visible)}\n'
         f'{emojis.BP} **Arena**: {await bool_to_text(user_settings.alert_arena.visible)}\n'
-        #f'{emojis.BP} **Boo** {emojis.PUMPKIN}: {await bool_to_text(user_settings.alert_boo.visible)}\n'
-        f'{emojis.BP} **Cel dailyquest** {emojis.COIN_CELEBRATION}: '
-        f'{await bool_to_text(user_settings.alert_cel_dailyquest.visible)}\n'
-        f'{emojis.BP} **Cel multiply** {emojis.COIN_CELEBRATION}: '
-        f'{await bool_to_text(user_settings.alert_cel_multiply.visible)}\n'
-        f'{emojis.BP} **Cel sacrifice** {emojis.COIN_CELEBRATION}: '
-        f'{await bool_to_text(user_settings.alert_cel_sacrifice.visible)}\n'
+        f'{emojis.BP} **Boo** {emojis.PUMPKIN}: {await bool_to_text(user_settings.alert_boo.visible)}\n'
+        #f'{emojis.BP} **Cel dailyquest** {emojis.COIN_CELEBRATION}: '
+        #f'{await bool_to_text(user_settings.alert_cel_dailyquest.visible)}\n'
+        #f'{emojis.BP} **Cel multiply** {emojis.COIN_CELEBRATION}: '
+        #f'{await bool_to_text(user_settings.alert_cel_multiply.visible)}\n'
+        #f'{emojis.BP} **Cel sacrifice** {emojis.COIN_CELEBRATION}: '
+        #f'{await bool_to_text(user_settings.alert_cel_sacrifice.visible)}\n'
         #f'{emojis.BP} **Chimney** {emojis.XMAS_SOCKS}: {await bool_to_text(user_settings.alert_chimney.visible)}\n'
         f'{emojis.BP} **Daily**: {await bool_to_text(user_settings.alert_daily.visible)}\n'
         f'{emojis.BP} **Duel**: {await bool_to_text(user_settings.alert_duel.visible)}\n'
@@ -1145,15 +1151,15 @@ async def embed_settings_reminders(bot: discord.Bot, ctx: discord.ApplicationCon
         #f'{await functions.bool_to_text(user_settings.alert_advent.enabled)}\n'
         f'{emojis.BP} **Adventure**: {await functions.bool_to_text(user_settings.alert_adventure.enabled)}\n'
         f'{emojis.BP} **Arena**: {await functions.bool_to_text(user_settings.alert_arena.enabled)}\n'
-        #f'{emojis.BP} **Boo** {emojis.PUMPKIN}: {await functions.bool_to_text(user_settings.alert_boo.enabled)}\n'
+        f'{emojis.BP} **Boo** {emojis.PUMPKIN}: {await functions.bool_to_text(user_settings.alert_boo.enabled)}\n'
         #f'{emojis.BP} **Chimney** {emojis.XMAS_SOCKS}: {await functions.bool_to_text(user_settings.alert_chimney.enabled)}\n'
         f'{emojis.BP} **Boost items**: {await functions.bool_to_text(user_settings.alert_boosts.enabled)}\n'
-        f'{emojis.BP} **Cel dailyquest** {emojis.COIN_CELEBRATION}: '
-        f'{await functions.bool_to_text(user_settings.alert_cel_dailyquest.enabled)}\n'
-        f'{emojis.BP} **Cel multiply** {emojis.COIN_CELEBRATION}: '
-        f'{await functions.bool_to_text(user_settings.alert_cel_multiply.enabled)}\n'
-        f'{emojis.BP} **Cel sacrifice** {emojis.COIN_CELEBRATION}: '
-        f'{await functions.bool_to_text(user_settings.alert_cel_sacrifice.enabled)}\n'
+        #f'{emojis.BP} **Cel dailyquest** {emojis.COIN_CELEBRATION}: '
+        #f'{await functions.bool_to_text(user_settings.alert_cel_dailyquest.enabled)}\n'
+        #f'{emojis.BP} **Cel multiply** {emojis.COIN_CELEBRATION}: '
+        #f'{await functions.bool_to_text(user_settings.alert_cel_multiply.enabled)}\n'
+        #f'{emojis.BP} **Cel sacrifice** {emojis.COIN_CELEBRATION}: '
+        #f'{await functions.bool_to_text(user_settings.alert_cel_sacrifice.enabled)}\n'
         f'{emojis.BP} **Daily**: {await functions.bool_to_text(user_settings.alert_daily.enabled)}\n'
         f'{emojis.BP} **Duel**: {await functions.bool_to_text(user_settings.alert_duel.enabled)}\n'
         f'{emojis.BP} **Dungeon / Miniboss**: {await functions.bool_to_text(user_settings.alert_dungeon_miniboss.enabled)}\n'
@@ -1210,6 +1216,7 @@ async def embed_settings_server(bot: discord.Bot, ctx: discord.ApplicationContex
         auto_flex_channel = '`N/A`'
     server_settings = (
         f'{emojis.BP} **Prefix**: `{guild_settings.prefix}`\n'
+        f'{emojis.DETAIL} _If you want to have a space after the prefix, you need to input it as `"prefix "`._'
         f'{emojis.BP} **Auto flex**: {await functions.bool_to_text(guild_settings.auto_flex_enabled)}\n'
         f'{emojis.BP} **Auto flex channel**: {auto_flex_channel}\n'
     )
